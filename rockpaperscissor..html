@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ding Ding</title>
+</head>
+<body>
+    <p>
+        Rock Paper Scissors
+    </p>
+    <button onclick="Rocks();"  class = "Rock">Rock</button>
+    <button onclick="Papers();" class = "Paper">Paper</button>
+    <button onclick="Scissors();" class = "Scissor">Scissor</button>
+
+    <p class="result">
+        Tie
+    </p>
+    <p class="Choice" > 
+    </p>
+    <p class = "ScoreBoard">
+        Wins : 0 , Losses : 0 , Ties : 6
+    </p>
+
+    <button  onclick="
+    score.wins = 0; 
+    score.losses = 0; 
+    score.ties = 0; 
+    localStorage.removeItem('score'); 
+    ScoreUpdate(); 
+    "> 
+        Reset Score
+    </button>
+    
+    <p class = "bkl">Computer Choice : </p>
+
+    <script> 
+
+    // let score = JSON.parse(localStorage.getItem('score')) || {
+    //     wins: 0,
+    //     losses: 0,
+    //     ties: 0
+    //   };
+    const score = { 
+        wins: 0 , 
+        losses: 0, 
+        ties: 0
+    };
+    
+    ScoreUpdate();
+    
+    const CompChoice = CompChoices();
+    let Result = '';
+    
+    
+    
+    document.querySelector('.bkl').innerHTML = `computer choice : ${CompChoice}`;
+         
+
+    function Rocks(){ 
+        
+        if(CompChoice==="Rock"){ 
+            Result = "Tie";
+            score.ties +=1;
+        }
+        else if(CompChoice==="Paper"){ 
+             Result = "CompWin"; 
+             score.losses +=1;
+        }
+        else{ 
+            Result = "YouWin"
+            score.wins +=1;
+        }
+    }
+    function Papers(){ 
+        if(CompChoice==="Rock"){ 
+            Result = "YouWin"
+            score.wins +=1;
+        }
+        else if(CompChoice==="Paper"){ 
+            Result = "Tie";
+            score.ties +=1;
+        }
+        else{ 
+            Result = "CompWin"; 
+             score.losses +=1;
+        }
+    }
+    function Scissors(){ 
+        if(CompChoice==="Rock"){ 
+            Result = "CompWin"; 
+             score.losses +=1;
+            
+        }
+        else if(CompChoice==="Paper"){ 
+            Result = "YouWin"
+            score.wins +=1;
+        }
+        else{ 
+            Result = "Tie";
+            score.ties +=1;
+        }
+    }
+
+    // localStorage.setItem('score', JSON.stringify(score));
+
+    ScoreUpdate();
+    
+    document.querySelector('.result').innerHTML = Result;
+
+
+    function ScoreUpdate(){ 
+        document.querySelector('.ScoreBoard').innerHTML = 
+        `Wins: ${score.wins}, Losses: ${score.losses} , Ties: ${score.ties}`;
+    }
+    ScoreUpdate();
+    function CompChoices(){ 
+        const randum = Math.random();
+        let CompChoice = ''; 
+        if(randum >=0 && randum <= 1/3){ 
+            CompChoice = "Rock";  
+        }
+        else if(randum > 1/3 && randum <= 2/3){ 
+            CompChoice = "Paper"; 
+        }
+        else if(randum >2/3 && randum < 1){ 
+            CompChoice = "Scissor";
+        }
+    return CompChoice;
+    }
+    
+
+
+    </script>
+</body>
+</html>
+
