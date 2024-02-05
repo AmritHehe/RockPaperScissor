@@ -1,66 +1,67 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <p>Youtube Subscirbe button </p>
-    <button onclick="Subscirbe();" class="js-subscribe" >
-        Subscirbe
-    </button>
-    <style>
-        .js-subscribe{ 
-            text-align: center;
-            font-family: 'Times New Roman', Times, serif;
-            background-color: black;
-            color: wheat;
-            size: 10;
-            padding: 0.5%
-            
-        }
-    </style>
-    <script>
-        function Subscirbe(){ 
-            const buttonElem = document.querySelector('.js-subscribe');
-
-            if(buttonElem.innerText === 'Subscirbe'){ 
-                buttonElem.innerHTML = 'Suscribed';
-            }
-            else{ 
-                buttonElem.innerHTML = 'Subscirbe';
-            }
-        }
-
-    </script>
-</body>
-</html> -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ding Ding</title>
+    <style>
+        body{ 
+            background-color: rgb(115, 108, 249);
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .img{ 
+            height: 100px;
+        }
+        .buttons{ 
+            background-color: transparent;
+            border: 1px solid white;
+            width: 130px;
+            height: 130px;
+            border-radius: 60px;
+            margin-right: 20px;
+            cursor: pointer;
+            /* transform: scale(1); */
+            transition:transform 0.2s ease-in-out
+        }
+        .buttons:hover{ 
+            transform: scale(1.2);
+        }
+        .button2{
+            background-color:white;
+            border-radius: 30px;
+            font-family: Arial, Helvetica, sans-serif;
+            height:50px ;
+            width: 100px;
+            font-weight: bold;
+
+        }
+        .result{ 
+            color: rgb(255, 227, 114);
+        }
+
+        
+    </style>
 </head>
 <body>
-    <p>
+    <h1>
         Rock Paper Scissors
-    </p>
-    <button onclick="Rocks();"  class = "Rock">Rock</button>
-    <button onclick="Papers();" class = "Paper">Paper</button>
-    <button onclick="Scissors();" class = "Scissor">Scissor</button>
+    </h1>
+    <button  onclick="Playgame('Rock')"  class = "buttons"><img src="rock.png" class ="img"></button>
+    <button onclick="Playgame('Paper')" class = "buttons">r<img src="paper.png" class ="img"></button>
+    <button onclick="Playgame('Scissor')" class = "buttons"><img src="sci.png" class ="img"></button>
 
-    <p class="result">
+    <h2 class="result">
         Tie
-    </p>
-    <p class="Choice" > 
-    </p>
-    <p class = "ScoreBoard">
+    </h2>
+    <h3 class="Choice" > 
+    </h3>
+    <h3 class = "ScoreBoard">
         Wins : 0 , Losses : 0 , Ties : 6
-    </p>
+    </h3>
 
-    <button  onclick="
+    <button class="button2"
+     onclick="
     score.wins = 0; 
     score.losses = 0; 
     score.ties = 0; 
@@ -70,32 +71,29 @@
         Reset Score
     </button>
     
-    <p class = "bkl">Computer Choice : </p>
+    <!-- <p class = "bkl">Computer Choice : </p> -->
 
     <script> 
 
-    // let score = JSON.parse(localStorage.getItem('score')) || {
-    //     wins: 0,
-    //     losses: 0,
-    //     ties: 0
-    //   };
-    const score = { 
-        wins: 0 , 
-        losses: 0, 
+    let score = JSON.parse(localStorage.getItem('score')) || {
+        wins: 0,
+        losses: 0,
         ties: 0
-    };
-    
+      };
+
     ScoreUpdate();
     
-    const CompChoice = CompChoices();
-    let Result = '';
     
     
     
-    document.querySelector('.bkl').innerHTML = `computer choice : ${CompChoice}`;
+    // document.querySelector('.bkl').innerHTML = `computer choice : ${CompChoice}`;
          
 
-    function Rocks(){ 
+    function Playgame(playermove){ 
+    const CompChoice = CompChoices();
+    let Result = '';
+
+    if(playermove==="Rock"){
         
         if(CompChoice==="Rock"){ 
             Result = "Tie";
@@ -110,7 +108,7 @@
             score.wins +=1;
         }
     }
-    function Papers(){ 
+    else if(playermove==="Paper"){ 
         if(CompChoice==="Rock"){ 
             Result = "YouWin"
             score.wins +=1;
@@ -124,7 +122,7 @@
              score.losses +=1;
         }
     }
-    function Scissors(){ 
+    else if(playermove==="Scissor"){ 
         if(CompChoice==="Rock"){ 
             Result = "CompWin"; 
              score.losses +=1;
@@ -139,19 +137,19 @@
             score.ties +=1;
         }
     }
-
-    // localStorage.setItem('score', JSON.stringify(score));
+    localStorage.setItem('score', JSON.stringify(score));
 
     ScoreUpdate();
     
     document.querySelector('.result').innerHTML = Result;
+    document.querySelector('.Choice').innerHTML = `You ${playermove} - ${CompChoice} Computer`;
+     }
 
 
     function ScoreUpdate(){ 
         document.querySelector('.ScoreBoard').innerHTML = 
         `Wins: ${score.wins}, Losses: ${score.losses} , Ties: ${score.ties}`;
     }
-    ScoreUpdate();
     function CompChoices(){ 
         const randum = Math.random();
         let CompChoice = ''; 
